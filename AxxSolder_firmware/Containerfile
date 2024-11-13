@@ -23,6 +23,8 @@ RUN apt-get update && \
 RUN git clone https://github.com/ObKo/stm32-cmake.git
 
 # Copy the rest of your project files into the container
+ENV STM32_CUBE_G4_PATH=/opt/G4
+
 COPY . .
 
 # Run cmake to build the project
