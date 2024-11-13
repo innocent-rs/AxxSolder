@@ -1,0 +1,30 @@
+# Use Debian minimal image
+FROM debian:bullseye-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        cmake \
+        make \
+        gcc-arm-none-eabi \
+        binutils-arm-none-eabi \
+        libnewlib-arm-none-eabi \
+        git \
+        build-essential \
+        libstdc++-10-dev \
+        curl \
+        ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+# Clone stm32-cmake repository
+RUN git clone https://github.com/ObKo/stm32-cmake.git
+
+# Copy the rest of your project files into the container
+COPY . .
+
+# Run cmake to build the project
+RUN cmake -S . -B build && \
+    cmake --build build
