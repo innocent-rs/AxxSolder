@@ -47,6 +47,8 @@ jobs:
       with:
          name: firmware
 
+    - name: Debug the FIRMWARE_PATH location
+      run: ls al && ls -al ${{ env.FIRMWARE_PATH }}  # Check that the file exists before uploading
     - name: Create GitHub release
       uses: softprops/action-gh-release@v1
       with:
