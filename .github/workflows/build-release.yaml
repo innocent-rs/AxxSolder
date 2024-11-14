@@ -18,7 +18,7 @@ jobs:
 
     - name: Run firmware build and copy artifact
       run: |
-        AxxSolder_firmware
+        cd AxxSolder_firmware
         docker run --rm \
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
