@@ -52,6 +52,6 @@ jobs:
     - name: Create GitHub release
       uses: softprops/action-gh-release@v1
       with:
-        files: ${{ env.FIRMWARE_PATH }}
+        files: ${{ github.workspace }}/*.bin
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
