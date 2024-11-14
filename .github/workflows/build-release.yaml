@@ -25,6 +25,9 @@ jobs:
           firmware-builder \
           cp /app/build/AxxSolder.bin /workspace/${GITHUB_REF#refs/tags/}.bin
 
+    - name: Debug artifact location
+      run: ls -al
+    
     - name: Upload firmware artifact
       uses: actions/upload-artifact@v3
       with:
@@ -32,19 +35,19 @@ jobs:
         path: ${GITHUB_REF#refs/tags/}.bin
 
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
+  #release:
+  #  needs: build
+  #  runs-on: ubuntu-latest
 
-    steps:
-    - name: Download firmware artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: firmware
+    # steps:
+    # - name: Download firmware artifact
+    #   uses: actions/download-artifact@v3
+    #   with:
+    #     name: firmware
 
-    - name: Create GitHub release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: ${GITHUB_REF#refs/tags/}.bin
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Create GitHub release
+    #   uses: softprops/action-gh-release@v1
+    #   with:
+    #     files: ${GITHUB_REF#refs/tags/}.bin
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
