@@ -1,0 +1,48 @@
+name: Build and Release Firmware
+
+on:
+  push:
+    tags:
+      - '*' # Triggers on any tag
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build Docker image
+      run: docker build -t firmware-builder -f Containerfile .
+
+    - name: Run firmware build and copy artifact
+      run: |
+        docker run --rm \
+          -v ${{ github.workspace }}:/workspace \
+          -w /workspace \
+          firmware-builder \
+          cp /app/build/firmware.bin /workspace/artifacts/${GITHUB_REF#refs/tags/}.bin
+
+    - name: Upload firmware artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: firmware
+        path: artifacts/
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download firmware artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: firmware
+
+    - name: Create GitHub release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: artifacts/*
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
