@@ -13,6 +13,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Set firmware file path
+      run: echo "FIRMWARE_PATH=${{ github.workspace }}/${GITHUB_REF#refs/tags/}.bin" >> $GITHUB_ENV
     - name: Build Docker image
       run: cd AxxSolder_firmware && docker build -t firmware-builder -f Containerfile .
 
@@ -23,7 +25,7 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           firmware-builder \
-          cp /app/build/AxxSolder.bin /workspace/${GITHUB_REF#refs/tags/}.bin
+          cp /app/build/AxxSolder.bin /workspace/${FIRMWARE_PATH}
 
     - name: Debug artifact location
       run: ls -al
@@ -32,7 +34,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: firmware
-        path: $(git describe --tags --abbrev=0).bin
+        path: ${{ env.FIRMWARE_PATH }}
 
 
   #release:
