@@ -32,7 +32,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: firmware
-        path: *.bin
+        path: $(git describe --tags --abbrev=0).bin
 
 
   #release:
