@@ -13,7 +13,7 @@ void beep(double buzzer_enabled){
 
 /* Beep the beeper twice*/
 void beep_startup(double buzzer_enabled){
-	beep(buzzer_enabled);
+	beep(buzzer_enabled)
 	HAL_Delay(100);
 	beep(buzzer_enabled);
 }
