@@ -23,7 +23,7 @@ jobs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           firmware-builder \
-          cp /app/build/firmware.bin /workspace/artifacts/${GITHUB_REF#refs/tags/}.bin
+          cp /app/build/AxxSolder.bin /workspace/artifacts/${GITHUB_REF#refs/tags/}.bin
 
     - name: Upload firmware artifact
       uses: actions/upload-artifact@v3
