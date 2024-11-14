@@ -26,9 +26,6 @@ jobs:
           -w /workspace \
           firmware-builder \
           cp /app/build/AxxSolder.bin /workspace/${FIRMWARE_PATH}
-
-    - name: Debug artifact location
-      run: ls -al
     
     - name: Upload firmware artifact
       uses: actions/upload-artifact@v3
@@ -47,8 +44,6 @@ jobs:
       with:
          name: firmware
 
-    - name: Debug the FIRMWARE_PATH location
-      run: ls -al && ls -al ${{ env.FIRMWARE_PATH }}  # Check that the file exists before uploading
     - name: Create GitHub release
       uses: softprops/action-gh-release@v1
       with:
