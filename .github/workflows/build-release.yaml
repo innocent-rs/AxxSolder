@@ -4,6 +4,9 @@ on:
   push:
     tags:
       - '*' # Triggers on any tag
+  pull_request:
+    branches:
+      - main  # Trigger on PRs to the main branch
 
 jobs:
   build:
@@ -36,6 +39,7 @@ jobs:
 
   release:
     needs: build
+    if: startsWith(github.ref, 'refs/tags/') #will only run on tags, never on PRs
     runs-on: ubuntu-latest
 
     steps:
