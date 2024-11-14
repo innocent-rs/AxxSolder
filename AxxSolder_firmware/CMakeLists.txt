@@ -11,11 +11,12 @@ project(AxxSolder C ASM)
 set(linker_script_SRC               ${CMAKE_SOURCE_DIR}/STM32G431CBTX_FLASH.ld)
 set(EXECUTABLE                      ${CMAKE_PROJECT_NAME})
 
-file(GLOB_RECURSE source_list
+file(GLOB source_list
     ${CMAKE_SOURCE_DIR}/Core/Src/*.c
     ${CMAKE_SOURCE_DIR}/Drivers/STM32G4xx_HAL_Driver/Src/*.c
     ${CMAKE_SOURCE_DIR}/Drivers/LCD/*.c
     ${CMAKE_SOURCE_DIR}/Drivers/UGUI/*.c
+    ${CMAKE_SOURCE_DIR}/Drivers/UGUI/Fonts/*.c
 )
 
 set(include_list ${include_list}
@@ -56,7 +57,7 @@ target_link_options(${EXECUTABLE} PRIVATE
 	${CPU_PARAMETERS}
 	-Wl,-Map=${CMAKE_PROJECT_NAME}.map
 	--specs=nosys.specs
-	#-u _printf_float                # STDIO float formatting support
+	-u _printf_float                # STDIO float formatting support
 	-Wl,--start-group
 	-lc
 	-lm
