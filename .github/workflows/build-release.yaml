@@ -37,19 +37,19 @@ jobs:
         path: ${{ env.FIRMWARE_PATH }}
 
 
-  #release:
-  #  needs: build
-  #  runs-on: ubuntu-latest
+  release:
+    needs: build
+    runs-on: ubuntu-latest
 
-    # steps:
-    # - name: Download firmware artifact
-    #   uses: actions/download-artifact@v3
-    #   with:
-    #     name: firmware
+    steps:
+    - name: Download firmware artifact
+      uses: actions/download-artifact@v3
+      with:
+         name: firmware
 
-    # - name: Create GitHub release
-    #   uses: softprops/action-gh-release@v1
-    #   with:
-    #     files: ${GITHUB_REF#refs/tags/}.bin
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create GitHub release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ${{ env.FIRMWARE_PATH }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
