@@ -29,7 +29,8 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: firmware
-        path: AxxSolder_firmware/
+        path: ${GITHUB_REF#refs/tags/}.bin
+
 
   release:
     needs: build
@@ -44,6 +45,6 @@ jobs:
     - name: Create GitHub release
       uses: softprops/action-gh-release@v1
       with:
-        files: AxxSolder_firmware/*
+        files: ${GITHUB_REF#refs/tags/}.bin
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
