@@ -32,7 +32,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: firmware
-        path: ${GITHUB_REF#refs/tags/}.bin
+        path: *.bin
 
 
   #release:
