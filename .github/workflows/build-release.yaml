@@ -25,13 +25,13 @@ jobs:
           firmware-builder \
           ls /app/build
           ls /workspace/artifacts
-          cp /app/build/AxxSolder.bin /workspace/artifacts/${GITHUB_REF#refs/tags/}.bin
+          cp /app/build/AxxSolder.bin /workspace/${GITHUB_REF#refs/tags/}.bin
 
     - name: Upload firmware artifact
       uses: actions/upload-artifact@v3
       with:
         name: firmware
-        path: AxxSolder_firmware/artifacts/
+        path: AxxSolder_firmware/
 
   release:
     needs: build
@@ -46,6 +46,6 @@ jobs:
     - name: Create GitHub release
       uses: softprops/action-gh-release@v1
       with:
-        files: AxxSolder_firmware/artifacts/*
+        files: AxxSolder_firmware/*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
